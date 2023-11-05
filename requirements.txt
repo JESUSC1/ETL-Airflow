@@ -1,8 +1,9 @@
-apache-airflow == 2.2.0
-virtualenv
+apache-airflow==2.2.0
+apache-airflow-providers-amazon
+sqlalchemy<2.0
 boto3
 requests
-sqlalchemy<2.0
 beautifulsoup4
-psycopg2-binary # Use psycopg2-binary for simplicity
+psycopg2-binary  # Use psycopg2-binary for simplicity
+virtualenv
 

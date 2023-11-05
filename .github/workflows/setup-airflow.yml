@@ -47,8 +47,14 @@ jobs:
     # Here you can add steps to run tests or any other checks you need
 
     - name: Shutdown Airflow
-      if: always()
-      run: |
-        airflow db check
-        pkill -f "airflow scheduler"
-        pkill -f "airflow webserver"
+  if: always()
+  run: |
+    airflow db check && echo "Database check was successful"
+    exit_code=$?
+    if [ $exit_code -ne 0 ]; then
+      echo "Database check failed with exit code $exit_code"
+      exit $exit_code
+    fi
+    pkill -f "airflow webserver"
+    pkill -f "airflow scheduler"
+

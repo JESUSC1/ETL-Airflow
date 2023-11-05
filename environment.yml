@@ -2,8 +2,9 @@ name: project env
 channels:
   - defaults
 dependencies:
-  - python=3.8 # Or any version you prefer
+  - python=3.8 
   - pip
+  - psycopg2 # Conda will handle the binary distribution automatically
   - pip:
     - apache-airflow==2.2.0
     - boto3

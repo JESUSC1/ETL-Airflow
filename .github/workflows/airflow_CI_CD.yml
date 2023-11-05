@@ -1,0 +1,51 @@
+name: Airflow CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    # Set up Conda and create the environment from your environment.yml
+    - name: Set up Conda
+      uses: conda-incubator/setup-miniconda@v2
+      with:
+        python-version: '3.8'
+        environment-file: environment.yml
+        activate-environment: airflow_env
+
+    # Conda environment has been set up and all dependencies installed,
+    # you can now run your tests or any other commands as required by your workflow
+    - name: Run tests
+      run: |
+        # Activate the conda environment in which Airflow is installed
+        conda activate airflow_env
+        # Then run your tests
+        echo "Running tests..."
+        # pytest tests/
+
+    # If you want to lint your code, ensure flake8 is included in your environment.yml or install it here
+    - name: Lint with Flake8
+      run: |
+        conda activate airflow_env
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+
+    # Deployment step, if applicable
+    - name: Deploy to Production
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      run: |
+        conda activate airflow_env
+        # Your deployment commands
+        echo "Deploying to production..."
+        # sh deploy-to-production.sh
+
+    # Add more jobs for deployment to staging or additional test environments as needed
+

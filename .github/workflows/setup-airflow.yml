@@ -1,0 +1,48 @@
+name: Setup Airflow
+
+on: [push]
+
+jobs:
+  setup-airflow:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+
+    - name: Install Apache Airflow
+      run: pip install apache-airflow==2.2.0
+
+    - name: Configure Airflow
+      env:
+        AIRFLOW_HOME: ${{ github.workspace }}/airflow
+      run: |
+        # Initialize the database
+        airflow db init
+
+        # Create an admin user
+        airflow users create \
+          --username ${{ secrets.AIRFLOW_USERNAME }} \
+          --password ${{ secrets.AIRFLOW_PASSWORD }} \
+          --firstname ${{ secrets.AIRFLOW_FIRSTNAME }} \
+          --lastname ${{ secrets.AIRFLOW_LASTNAME }} \
+          --role ${{ secrets.AIRFLOW_ROLE }} \
+          --email ${{ secrets.AIRFLOW_EMAIL }}
+
+        # Print the list of active users (for debugging)
+        airflow users list
+
+    - name: Start Airflow Webserver (Optional)
+      env:
+        AIRFLOW_HOME: ${{ github.workspace }}/airflow
+      run: |
+        # Start the web server, default port is 8080
+        airflow webserver --port 8080 &
+        
+        # The webserver is now running in the background
+        # This is just for demonstration purposes. In a real CI/CD situation, you might want to run tests here.

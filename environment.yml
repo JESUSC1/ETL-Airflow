@@ -1,0 +1,9 @@
+name: airflow_env
+channels:
+  - conda-forge
+dependencies:
+  - python=3.8
+  - pip
+  - pip:
+    - apache-airflow==2.2.3
+    # Include any other specific packages or versions you need

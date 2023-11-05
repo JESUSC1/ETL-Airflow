@@ -1,9 +1,12 @@
-name: airflow_env
+name: project env 
 channels:
-  - conda-forge
+  - defaults
 dependencies:
-  - python=3.8
+  - python=3.8 # Or any version you prefer
   - pip
   - pip:
-    - apache-airflow==2.2.3
-    # Include any other specific packages or versions you need
+    - apache-airflow==2.2.0
+    - boto3
+    - requests
+    - beautifulsoup4
+    - python-csv # This is included in the Python standard library, so no need to install it separately

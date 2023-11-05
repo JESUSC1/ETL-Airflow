@@ -1,0 +1,17 @@
+version: '3'
+services:
+  webserver:
+    image: apache/airflow:2.2.3
+    environment:
+      - LOAD_EX=n
+      - EXECUTOR=Local
+    ports:
+      - "8080:8080"
+    command: webserver
+
+  scheduler:
+    image: apache/airflow:2.2.3
+    environment:
+      - LOAD_EX=n
+      - EXECUTOR=Local
+    command: scheduler

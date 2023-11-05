@@ -1,0 +1,26 @@
+name: Setup Project Environment
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup Conda
+      uses: conda-incubator/setup-miniconda@v2
+      with:
+        auto-update-conda: true
+        python-version: 3.8
+        environment-file: environment.yml
+        activate-environment: my_project_environment
+
+    - name: Install Dependencies
+      run: |
+        conda info
+        conda list
+
+    # Add any additional commands you need to run for setting up your environment

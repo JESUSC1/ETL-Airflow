@@ -1,5 +1,7 @@
 apache-airflow == 2.2.0
+virtualenv
 boto3
 requests
 beautifulsoup4
 psycopg2-binary # Use psycopg2-binary for simplicity
+
